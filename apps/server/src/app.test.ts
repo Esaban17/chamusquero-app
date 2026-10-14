@@ -4,12 +4,14 @@ import type { AddressInfo } from "node:net";
 import { io as connect, type Socket } from "socket.io-client";
 import { getTeam } from "@chamusqueros/shared";
 import type { ClientToServerEvents, Column, MatchEnd, MatchStart, ServerToClientEvents } from "@chamusqueros/shared";
+import { signSession } from "@chamusqueros/shared/token";
 
-// Partidas rápidas y sin Supabase para las pruebas.
+// Partidas rápidas, sin base de datos y con un secreto de prueba.
 process.env.ALLOW_GUESTS = "true";
 process.env.BOT_WAIT_MS = "300";
 process.env.REVEAL_MS = "5";
-delete process.env.SUPABASE_URL;
+process.env.AUTH_SECRET = "secreto-de-prueba";
+delete process.env.DATABASE_URL;
 
 type Client = Socket<ServerToClientEvents, ClientToServerEvents>;
 
@@ -66,6 +68,20 @@ test("rechaza conexiones sin sesión ni invitado válido", async () => {
   clients.push(client);
   const err = await new Promise<Error>((resolve) => client.on("connect_error", resolve));
   assert.match(err.message, /iniciar sesión/);
+});
+
+test("una cuenta entra con el token que firma la web; uno falso o de otra audiencia no", async () => {
+  const user = { id: "c0ffee00-0000-4000-8000-000000000002", name: "Con Cuenta" };
+  const ok: Client = connect(url, { auth: { token: signSession(user, "socket", "secreto-de-prueba", 60) }, transports: ["websocket"] });
+  clients.push(ok);
+  assert.equal((await once(ok, "player:state")).name, "Con Cuenta");
+
+  for (const token of [signSession(user, "socket", "otro-secreto", 60), signSession(user, "web", "secreto-de-prueba", 60)]) {
+    const bad: Client = connect(url, { auth: { token }, transports: ["websocket"] });
+    clients.push(bad);
+    const err = await new Promise<Error>((resolve) => bad.on("connect_error", resolve));
+    assert.match(err.message, /Sesión inválida/);
+  }
 });
 
 test("no deja hacer cola sin equipo", async () => {

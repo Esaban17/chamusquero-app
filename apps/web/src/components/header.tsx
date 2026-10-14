@@ -3,7 +3,7 @@ import { getSessionUser } from "@/lib/auth";
 import { signOut } from "@/app/login/actions";
 
 export async function Header() {
-  const { user } = await getSessionUser();
+  const user = await getSessionUser();
 
   return (
     <header className="border-b border-line bg-card">
@@ -19,7 +19,8 @@ export async function Header() {
             Jugar
           </Link>
           {user ? (
-            <form action={signOut}>
+            <form action={signOut} className="flex items-center gap-2">
+              <span className="hidden font-semibold sm:inline">{user.name}</span>
               <button className="text-muted hover:underline">Salir</button>
             </form>
           ) : (

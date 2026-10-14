@@ -1,23 +1,17 @@
-import { createClient } from "@supabase/supabase-js";
 import type { HandshakeAuth } from "@chamusqueros/shared";
+import { verifySession } from "@chamusqueros/shared/token";
 import { config } from "./config.ts";
 
 export type AuthUser = { id: string; name: string };
 
-const authClient =
-  config.supabaseUrl && config.supabasePublishableKey
-    ? createClient(config.supabaseUrl, config.supabasePublishableKey, { auth: { persistSession: false } })
-    : null;
-
 const clean = (name: string) => name.replace(/\s+/g, " ").trim().slice(0, 24);
 
-/** Identifica al jugador con su token de Supabase, o como invitado si está permitido. */
+/** Identifica al jugador con el token que firma la web, o como invitado si está permitido. */
 export async function authenticate(auth: HandshakeAuth): Promise<AuthUser> {
-  if (auth.token && authClient) {
-    const { data, error } = await authClient.auth.getUser(auth.token);
-    if (error || !data.user) throw new Error("Sesión inválida, vuelve a entrar");
-    const meta = data.user.user_metadata as { username?: string } | undefined;
-    return { id: data.user.id, name: clean(meta?.username ?? data.user.email?.split("@")[0] ?? "Jugador") };
+  if (auth.token) {
+    const session = verifySession(auth.token, "socket", config.authSecret);
+    if (!session) throw new Error("Sesión inválida, vuelve a entrar");
+    return { id: session.sub, name: clean(session.name) || "Jugador" };
   }
 
   if (config.allowGuests && auth.guestId && /^[a-zA-Z0-9-]{8,64}$/.test(auth.guestId)) {

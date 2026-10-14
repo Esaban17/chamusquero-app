@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { Game } from "./game";
 import type { Identity } from "./use-game";
@@ -30,7 +31,24 @@ export function GuestGate() {
   const identity = created ?? storedIdentity;
   const [name, setName] = useState("");
 
-  if (identity) return <Game identity={identity} />;
+  if (identity) {
+    return (
+      <>
+        <p className="mb-4 rounded-lg bg-accent/20 px-4 py-2 text-sm">
+          Juegas como invitado: tu progreso no se guarda.{" "}
+          <Link href="/login?modo=crear&next=/jugar" className="font-semibold underline">
+            Crea una cuenta
+          </Link>{" "}
+          o{" "}
+          <Link href="/login?next=/jugar" className="font-semibold underline">
+            entra
+          </Link>
+          .
+        </p>
+        <Game identity={identity} />
+      </>
+    );
+  }
 
   return (
     <form
@@ -59,6 +77,16 @@ export function GuestGate() {
         />
       </div>
       <button className="btn w-full">Entrar a la cancha</button>
+      <p className="text-center text-sm text-muted">
+        ¿Quieres guardar tu progreso?{" "}
+        <Link href="/login?modo=crear&next=/jugar" className="font-semibold text-pitch-strong hover:underline">
+          Crea una cuenta
+        </Link>{" "}
+        ·{" "}
+        <Link href="/login?next=/jugar" className="font-semibold text-pitch-strong hover:underline">
+          Ya tengo cuenta
+        </Link>
+      </p>
     </form>
   );
 }
