@@ -12,6 +12,7 @@ import {
 import { Crest } from "@/components/crest";
 import { useSecondsLeft } from "./countdown";
 import { Goal } from "./goal";
+import { unlockAudio } from "./sound";
 import { Scoreboard } from "./scoreboard";
 import { TeamPicker } from "./team-picker";
 import { useGame, type Identity } from "./use-game";
@@ -68,6 +69,8 @@ export function Game({ identity }: { identity: Identity }) {
 
   if (match) {
     const role = turn ? (turn.shooter === match.you ? "shooter" : "keeper") : null;
+    const shooter = turn?.shooter ?? state.lastKick?.side ?? 0;
+    const keeperTeam = getTeam(match.sides[shooter === 0 ? 1 : 0].teamId);
     const won = end && end.winner === match.you;
     return (
       <div className="space-y-6">
@@ -95,8 +98,8 @@ export function Game({ identity }: { identity: Identity }) {
           <>
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold">
-                {role === "shooter" && "Tiras tú: elige dónde patear"}
-                {role === "keeper" && "Atajas tú: elige hacia dónde lanzarte"}
+                {role === "shooter" && "Tiras tú: arrastra el balón hacia la portería"}
+                {role === "keeper" && "Atajas tú: arrastra al portero hacia donde te lanzas"}
                 {!role && state.lastKick && `Tiro de ${getTeam(match.sides[state.lastKick.side].teamId)?.name ?? "rival"}`}
               </p>
               {turn && (
@@ -114,7 +117,11 @@ export function Game({ identity }: { identity: Identity }) {
               selected={turn ? state.myPick : null}
               disabled={!turn || !!state.myPick}
               reveal={state.lastKick}
-              onPick={actions.pick}
+              keeperColors={keeperTeam?.colors ?? ["#f2b705", "#14211a"]}
+              onPick={(pick) => {
+                unlockAudio();
+                actions.pick(pick);
+              }}
             />
             <p className="text-center text-sm text-muted">
               {turn && state.myPick && (state.rivalPicked ? "Ambos eligieron…" : "Esperando al rival…")}
@@ -163,7 +170,14 @@ export function Game({ identity }: { identity: Identity }) {
             </button>
           </div>
         ) : (
-          <button className="btn w-full py-3 text-lg" onClick={actions.joinQueue} disabled={state.connection !== "online"}>
+          <button
+            className="btn w-full py-3 text-lg"
+            onClick={() => {
+              unlockAudio();
+              actions.joinQueue();
+            }}
+            disabled={state.connection !== "online"}
+          >
             Jugar tanda
           </button>
         )}
