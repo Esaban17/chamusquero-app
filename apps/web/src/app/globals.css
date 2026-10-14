@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f7f2;
+  --foreground: #14211a;
+  --card: #ffffff;
+  --muted: #5b6b61;
+  --line: #d9e2da;
+  --pitch: #1f7a3d;
+  --pitch-strong: #155c2d;
+  --accent: #f2b705;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0d1510;
+    --foreground: #e8efe9;
+    --card: #15211a;
+    --muted: #9aaba0;
+    --line: #26362c;
+    --pitch: #2f9e55;
+    --pitch-strong: #3dbb68;
+    --accent: #f2c230;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-pitch: var(--pitch);
+  --color-pitch-strong: var(--pitch-strong);
+  --color-accent: var(--accent);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg bg-pitch px-4 py-2 font-semibold text-white transition hover:bg-pitch-strong disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg border border-line px-4 py-2 font-semibold transition hover:bg-card;
+  }
+  .card {
+    @apply rounded-xl border border-line bg-card p-5;
+  }
+  .field {
+    @apply w-full rounded-lg border border-line bg-background px-3 py-2 outline-none focus:border-pitch;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-muted;
+  }
+}
