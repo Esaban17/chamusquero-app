@@ -1,5 +1,5 @@
-import type { HandshakeAuth } from "@chamusqueros/shared";
-import { verifySession } from "@chamusqueros/shared/token";
+import type { HandshakeAuth } from "@penalitosgt/shared";
+import { verifySession } from "@penalitosgt/shared/token";
 import { config } from "./config.ts";
 
 export type AuthUser = { id: string; name: string };

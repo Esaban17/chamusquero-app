@@ -2,9 +2,9 @@ import { after, before, test } from "node:test";
 import assert from "node:assert/strict";
 import type { AddressInfo } from "node:net";
 import { io as connect, type Socket } from "socket.io-client";
-import { getTeam } from "@chamusqueros/shared";
-import type { ClientToServerEvents, Column, MatchEnd, MatchStart, ServerToClientEvents } from "@chamusqueros/shared";
-import { signSession } from "@chamusqueros/shared/token";
+import { getTeam } from "@penalitosgt/shared";
+import type { ClientToServerEvents, Column, MatchEnd, MatchStart, ServerToClientEvents } from "@penalitosgt/shared";
+import { signSession } from "@penalitosgt/shared/token";
 
 // Partidas rápidas, sin base de datos y con un secreto de prueba.
 process.env.ALLOW_GUESTS = "true";

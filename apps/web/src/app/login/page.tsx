@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { accountsEnabled, getSessionUser } from "@/lib/auth";
 import { signIn, signUp } from "./actions";
 
-export const metadata: Metadata = { title: "Entrar · Chamusqueros" };
+export const metadata: Metadata = { title: "Entrar · penalitosGT" };
 
 export default async function LoginPage({
   searchParams,
@@ -23,7 +23,7 @@ export default async function LoginPage({
   return (
     <section className="card mx-auto max-w-md space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">{creating ? "Crea tu cuenta" : "Entrar a Chamusqueros"}</h1>
+        <h1 className="text-2xl font-bold">{creating ? "Crea tu cuenta" : "Entrar a penalitosGT"}</h1>
         <p className="text-muted">
           {creating ? "Con una cuenta tu equipo y tu progreso se guardan y apareces en la tabla de tu liga." : "Sigue donde te quedaste."}
         </p>
@@ -35,7 +35,7 @@ export default async function LoginPage({
             <label htmlFor="username" className="label">
               Apodo
             </label>
-            <input id="username" name="username" maxLength={24} className="field" placeholder="El Chamusquero" />
+            <input id="username" name="username" maxLength={24} className="field" placeholder="El Goleador" />
           </div>
         )}
         <div>

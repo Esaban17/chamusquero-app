@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DIVISIONS, SEASON_LENGTH, getTeam, type DivisionId } from "@chamusqueros/shared";
+import { DIVISIONS, SEASON_LENGTH, getTeam, type DivisionId } from "@penalitosgt/shared";
 import { Crest } from "@/components/crest";
 import { getSessionUser } from "@/lib/auth";
 import { sql } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = { title: "Tabla · Chamusqueros" };
+export const metadata: Metadata = { title: "Tabla · penalitosGT" };
 
 type Row = {
   id: string;

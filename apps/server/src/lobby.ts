@@ -5,7 +5,7 @@ import {
   type DivisionId,
   type PlayerView,
   type Side,
-} from "@chamusqueros/shared";
+} from "@penalitosgt/shared";
 import type { AuthUser } from "./auth.ts";
 import { config } from "./config.ts";
 import { Match, userRoom, type MatchResult, type Participant } from "./match.ts";

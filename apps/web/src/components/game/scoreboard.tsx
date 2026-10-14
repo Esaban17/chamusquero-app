@@ -1,4 +1,4 @@
-import { REGULATION_ROUNDS, getTeam, score, type Kick, type MatchStart, type Side } from "@chamusqueros/shared";
+import { REGULATION_ROUNDS, getTeam, score, type Kick, type MatchStart, type Side } from "@penalitosgt/shared";
 import { Crest } from "@/components/crest";
 
 const MARK = { goal: "bg-pitch", saved: "bg-red-500", miss: "bg-red-500" } as const;

@@ -1,6 +1,6 @@
 "use client";
 
-import { DIVISIONS, SELECTABLE_TEAMS } from "@chamusqueros/shared";
+import { DIVISIONS, SELECTABLE_TEAMS } from "@penalitosgt/shared";
 import { Crest } from "@/components/crest";
 
 export function TeamPicker({ current, onPick }: { current: string | null; onPick: (teamId: string) => void }) {

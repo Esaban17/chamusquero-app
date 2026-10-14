@@ -1,4 +1,4 @@
--- Chamusqueros: esquema del juego de penales (Postgres en Neon).
+-- penalitosGT: esquema del juego de penales (Postgres en Neon).
 -- La web crea cuentas y lee la tabla; el progreso solo lo escribe el servidor de partidas.
 -- Se puede aplicar varias veces: todo es "if not exists".
 

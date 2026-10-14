@@ -8,7 +8,7 @@ import {
   divisionName,
   getTeam,
   type ProgressEvent,
-} from "@chamusqueros/shared";
+} from "@penalitosgt/shared";
 import { Crest } from "@/components/crest";
 import { useSecondsLeft } from "./countdown";
 import { Goal } from "./goal";

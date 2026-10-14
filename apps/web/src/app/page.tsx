@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DIVISIONS, teamsInDivision } from "@chamusqueros/shared";
+import { DIVISIONS, teamsInDivision } from "@penalitosgt/shared";
 import { Crest } from "@/components/crest";
 
 export default function Home() {

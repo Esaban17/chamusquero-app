@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { signSession, verifySession } from "./token.ts";
 
-const user = { id: "c0ffee00-0000-4000-8000-000000000001", name: "Chamusquero" };
+const user = { id: "c0ffee00-0000-4000-8000-000000000001", name: "Goleador" };
 
 test("una sesión firmada se verifica con el mismo secreto y audiencia", () => {
   const token = signSession(user, "web", "secreto", 60);

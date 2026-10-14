@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
-import { signSession, verifySession } from "@chamusqueros/shared/token";
+import { signSession, verifySession } from "@penalitosgt/shared/token";
 
 export type SessionUser = { id: string; name: string };
 
-const COOKIE = "chamusqueros_session";
+const COOKIE = "penalitosgt_session";
 const MONTH = 60 * 60 * 24 * 30;
 const secret = () => process.env.AUTH_SECRET ?? "";
 

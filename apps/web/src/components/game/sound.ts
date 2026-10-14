@@ -1,6 +1,6 @@
 "use client";
 
-import type { KickOutcome } from "@chamusqueros/shared";
+import type { KickOutcome } from "@penalitosgt/shared";
 
 /** Sonidos sintetizados con Web Audio: sin archivos de audio ni dependencias. */
 let ctx: AudioContext | null = null;

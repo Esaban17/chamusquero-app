@@ -6,7 +6,7 @@ import { getSessionUser, socketToken } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = { title: "Jugar · Chamusqueros" };
+export const metadata: Metadata = { title: "Jugar · penalitosGT" };
 
 export default async function PlayPage() {
   const user = await getSessionUser();

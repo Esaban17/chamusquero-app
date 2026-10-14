@@ -1,4 +1,4 @@
-# Chamusqueros ⚽
+# penalitosGT ⚽
 
 Juego web de penales multijugador del fútbol guatemalteco. Eliges a tu equipo favorito, arrancas en Tercera División y asciendes ganando tandas de penales en tiempo real hasta ser campeón de Liga Nacional.
 

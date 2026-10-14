@@ -5,7 +5,7 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import { Game } from "./game";
 import type { Identity } from "./use-game";
 
-const KEY = "chamusqueros:guest";
+const KEY = "penalitosgt:guest";
 
 const readStored = () => {
   try {
@@ -73,7 +73,7 @@ export function GuestGate() {
           maxLength={24}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="El Chamusquero"
+          placeholder="El Goleador"
         />
       </div>
       <button className="btn w-full">Entrar a la cancha</button>
