@@ -43,7 +43,7 @@ Definidos con tipos en `packages/shared/src/protocol.ts`:
 1. Crear el proyecto de Supabase, aplicar la migración y configurar el correo del enlace mágico (plantilla en español y URL de redirección del dominio).
 2. Desplegar `apps/web` en Vercel con las variables de `apps/web/.env.example`.
 3. Desplegar `apps/server` en un servicio con WebSockets (Railway, Render o Fly) con las variables de `apps/server/.env.example`, y apuntar `NEXT_PUBLIC_GAME_SERVER_URL` a su URL.
-4. Verificar la lista de Segunda División y conseguir la de Tercera (`packages/shared/src/teams.ts`), y confirmar colores de cada club.
+4. Verificar la lista de Segunda División (`packages/shared/src/teams.ts`) y confirmar colores de cada club.
 5. Decidir si se piden permisos a los clubes o a la liga para usar escudos oficiales.
 6. Dominio, política de privacidad y términos (se guardan correos).
 7. Límite de conexiones por IP y monitoreo de errores del servidor.

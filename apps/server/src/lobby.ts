@@ -35,7 +35,7 @@ export class Lobby {
 
   async setTeam(user: AuthUser, teamId: string) {
     const team = getTeam(teamId);
-    if (!team || team.division === "tercera") throw new Error("Ese equipo no existe");
+    if (!team) throw new Error("Ese equipo no existe");
     if (this.matchByUser.has(user.id) || this.isWaiting(user.id)) throw new Error("No puedes cambiar de equipo en plena partida");
     await storeFor(user.id).setTeam(user.id, teamId);
   }

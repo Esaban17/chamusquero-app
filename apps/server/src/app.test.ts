@@ -2,6 +2,7 @@ import { after, before, test } from "node:test";
 import assert from "node:assert/strict";
 import type { AddressInfo } from "node:net";
 import { io as connect, type Socket } from "socket.io-client";
+import { getTeam } from "@chamusqueros/shared";
 import type { ClientToServerEvents, Column, MatchEnd, MatchStart, ServerToClientEvents } from "@chamusqueros/shared";
 
 // Partidas rápidas y sin Supabase para las pruebas.
@@ -115,7 +116,7 @@ test("si no hay rival, juega contra un bot de un equipo real de su división", a
   const { start, end } = await game;
   assert.equal(start.sides[1].bot, true);
   assert.notEqual(start.sides[1].teamId, "xelaju");
-  assert.ok(start.sides[1].teamId.startsWith("tercera-"));
+  assert.equal(getTeam(start.sides[1].teamId)?.division, "tercera");
   assert.ok(end.winner === 0 || end.winner === 1);
 });
 
