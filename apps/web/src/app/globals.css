@@ -34,6 +34,24 @@
   --color-pitch-strong: var(--pitch-strong);
   --color-accent: var(--accent);
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Portero esperando el tiro: se mueve de lado a lado sobre la línea. */
+  --animate-keeper: keeper-sway 1.6s ease-in-out infinite;
+  @keyframes keeper-sway {
+    0%,
+    100% {
+      transform: translateX(-30%);
+    }
+    25% {
+      transform: translateX(0) translateY(-6%);
+    }
+    50% {
+      transform: translateX(30%);
+    }
+    75% {
+      transform: translateX(0) translateY(-6%);
+    }
+  }
 }
 
 body {

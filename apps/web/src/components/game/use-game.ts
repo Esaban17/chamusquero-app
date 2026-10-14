@@ -2,7 +2,6 @@
 
 import { useEffect, useReducer, useRef } from "react";
 import { io, type Socket } from "socket.io-client";
-import { createClient } from "@/lib/supabase/client";
 import type {
   ClientToServerEvents,
   DivisionId,
@@ -104,7 +103,8 @@ function reducer(state: GameState, action: Action): GameState {
   }
 }
 
-export type Identity = { kind: "account" } | { kind: "guest"; guestId: string; guestName: string };
+/** Con cuenta, `token` es el que firma la página /jugar para identificarse con el servidor de partidas. */
+export type Identity = { kind: "account"; token: string } | { kind: "guest"; guestId: string; guestName: string };
 
 /** Conexión con el servidor de partidas y el estado del juego. */
 export function useGame(identity: Identity | null) {
@@ -114,14 +114,8 @@ export function useGame(identity: Identity | null) {
   useEffect(() => {
     if (!identity) return;
     const url = process.env.NEXT_PUBLIC_GAME_SERVER_URL ?? "http://localhost:4000";
-    // Con cuenta, el token se pide en cada (re)conexión para que nunca vaya vencido.
-    const auth =
-      identity.kind === "account"
-        ? (cb: (data: HandshakeAuth) => void) =>
-            createClient()
-              .auth.getSession()
-              .then(({ data }) => cb({ token: data.session?.access_token }))
-        : { guestId: identity.guestId, guestName: identity.guestName };
+    const auth: HandshakeAuth =
+      identity.kind === "account" ? { token: identity.token } : { guestId: identity.guestId, guestName: identity.guestName };
     const socket: GameSocket = io(url, { auth, transports: ["websocket"] });
     socketRef.current = socket;
 

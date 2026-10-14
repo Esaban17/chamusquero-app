@@ -6,10 +6,10 @@ Juego web de penales multijugador del fútbol guatemalteco. Eliges a tu equipo f
 
 | Carpeta | Qué es |
 | --- | --- |
-| `apps/web` | Next.js 16 (App Router + Tailwind). Landing, login con enlace mágico, pantalla de juego y tabla. Se despliega en Vercel. |
-| `apps/server` | Servidor Socket.IO autoritativo: emparejamiento por división, bots de respaldo, tandas y progreso. Se despliega como servicio Node con WebSockets (Railway, Render o Fly). |
+| `apps/web` | Next.js 16 (App Router + Tailwind). Landing, cuentas con correo y contraseña, pantalla de juego y tabla por liga. Se despliega en Vercel. |
+| `apps/server` | Servidor Socket.IO autoritativo: emparejamiento por división, bots de respaldo, tandas y progreso. Se despliega en Vercel como segundo proyecto (WebSockets en Vercel Functions). |
 | `packages/shared` | Reglas puras compartidas: tanda de penales, ascensos y descensos, equipos reales y contrato de eventos del socket. |
-| `supabase/migrations` | Esquema de base de datos (perfiles, partidas, RLS). |
+| `db/schema.sql` | Esquema de Postgres (Neon): cuentas, perfiles y partidas. |
 
 Más detalle en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
 
@@ -24,7 +24,7 @@ cp apps/server/.env.example apps/server/.env
 npm run dev   # web en :3000, servidor de partidas en :4000
 ```
 
-Sin variables de Supabase todo funciona en modo invitado y el progreso vive en memoria del servidor. Para cuentas reales, crea un proyecto en Supabase, aplica `supabase/migrations/0001_init.sql` y llena las variables de los dos `.env`.
+Sin `DATABASE_URL` todo funciona en modo invitado y el progreso vive en memoria del servidor. Para cuentas reales, usa una base Postgres (en producción, Neon desde el Marketplace de Vercel), aplica el esquema con `psql "$DATABASE_URL" -f db/schema.sql` y pon el mismo `DATABASE_URL` y `AUTH_SECRET` en los dos `.env`.
 
 ## Comandos
 

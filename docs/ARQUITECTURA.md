@@ -3,16 +3,15 @@
 ## Vista general
 
 ```
-Navegador ──HTTPS──▶ Next.js en Vercel (páginas, login, tabla)
-    │                       │
-    │                       └──▶ Supabase (Auth + Postgres, solo lectura desde la web)
-    │
-    └──WebSocket──▶ Servidor Socket.IO (Node) ──▶ Supabase (escritura con clave secreta)
+Navegador ──HTTPS──▶ Next.js en Vercel (páginas, cuentas, tabla) ──▶ Postgres en Neon
+    │                                                                    ▲
+    └──WebSocket──▶ Servidor Socket.IO en Vercel (partidas, progreso) ──┘
 ```
 
-- **La web no escribe en la base.** Todo cambio de progreso pasa por el servidor de partidas, que usa la clave secreta. RLS solo permite leer, así un jugador no puede subirse de división desde la consola del navegador.
+- **El progreso solo lo escribe el servidor de partidas.** La web crea cuentas y lee la tabla; ningún endpoint de la web cambia divisiones ni victorias, así un jugador no puede subirse de división desde la consola del navegador.
 - **El servidor es autoritativo.** Cada jugador manda su elección a ciegas (`match:pick`). El servidor no revela nada hasta tener ambas o hasta que se acaba el tiempo (10 s, después elige al azar). El azar (tiros altos que se van afuera) también vive en el servidor.
-- **Autenticación del socket.** La web manda el access token de Supabase en el handshake; el servidor lo valida con `auth.getUser`. El token se pide de nuevo en cada reconexión, así no vence a media sesión.
+- **Cuentas.** Correo y contraseña (scrypt con sal por usuario). La sesión es una cookie httpOnly firmada con HMAC (`AUTH_SECRET`, 30 días). Cinco intentos fallidos bloquean la cuenta 15 minutos.
+- **Autenticación del socket.** La página `/jugar` firma un token corto (12 h) que el navegador manda en el handshake; el servidor lo verifica con el mismo `AUTH_SECRET`, sin consultar la base. Firma y verificación viven en `packages/shared/src/token.ts`.
 
 ## Reglas del juego
 
@@ -34,16 +33,14 @@ Definidos con tipos en `packages/shared/src/protocol.ts`:
 
 ## Límites conocidos del MVP
 
-- **Una sola instancia del servidor.** Las colas y partidas viven en memoria. Para escalar a varias instancias hace falta el adaptador de Redis de Socket.IO y mover las colas a Redis.
+- **Estado de partidas en memoria.** Las colas y partidas viven en la instancia que atiende la conexión. En Vercel las conexiones nuevas no siempre caen en la misma instancia y se cortan a los 5 minutos (el cliente reconecta). Para garantizar el emparejamiento entre humanos hace falta Redis.
 - **Un reinicio del servidor corta las partidas en curso** (el progreso ya guardado no se pierde).
 - **Invitados** (`ALLOW_GUESTS`) guardan progreso solo en memoria. En producción conviene apagarlo o limitarlo.
 
 ## Pendiente para lanzar
 
-1. Crear el proyecto de Supabase, aplicar la migración y configurar el correo del enlace mágico (plantilla en español y URL de redirección del dominio).
-2. Desplegar `apps/web` en Vercel con las variables de `apps/web/.env.example`.
-3. Desplegar `apps/server` en un servicio con WebSockets (Railway, Render o Fly) con las variables de `apps/server/.env.example`, y apuntar `NEXT_PUBLIC_GAME_SERVER_URL` a su URL.
-4. Verificar la lista de Segunda División (`packages/shared/src/teams.ts`) y confirmar colores de cada club.
-5. Decidir si se piden permisos a los clubes o a la liga para usar escudos oficiales.
-6. Dominio, política de privacidad y términos (se guardan correos).
-7. Límite de conexiones por IP y monitoreo de errores del servidor.
+1. Recuperar contraseña (hoy no hay envío de correos).
+2. Verificar la lista de Segunda División (`packages/shared/src/teams.ts`) y confirmar colores de cada club.
+3. Decidir si se piden permisos a los clubes o a la liga para usar escudos oficiales.
+4. Dominio, política de privacidad y términos (se guardan correos).
+5. Límite de conexiones por IP y monitoreo de errores del servidor.

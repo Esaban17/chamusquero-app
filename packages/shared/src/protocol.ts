@@ -52,5 +52,5 @@ export interface ClientToServerEvents {
   "match:forfeit": (matchId: string) => void;
 }
 
-/** token: access token de Supabase. Si el servidor permite invitados, se puede jugar con guestId + guestName. */
+/** token: sesión firmada por la web (ver token.ts). Si el servidor permite invitados, se puede jugar con guestId + guestName. */
 export type HandshakeAuth = { token?: string; guestId?: string; guestName?: string };

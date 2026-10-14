@@ -1,6 +1,6 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 import { getTeam, newProgress, type DivisionId, type Progress } from "@chamusqueros/shared";
-import { config, hasSupabase } from "./config.ts";
+import { config, hasDatabase } from "./config.ts";
 
 export type PlayerRecord = {
   id: string;
@@ -63,28 +63,21 @@ type ProfileRow = {
   losses: number;
 };
 
-/** Persiste en Supabase con la clave secreta (salta RLS: solo el servidor escribe). */
-export class SupabaseStore implements Store {
-  private db: SupabaseClient;
+/** Persiste en Postgres (Neon). Solo el servidor de partidas escribe el progreso. */
+export class PostgresStore implements Store {
+  private sql: NeonQueryFunction<false, false>;
 
-  constructor(db: SupabaseClient) {
-    this.db = db;
+  constructor(sql: NeonQueryFunction<false, false>) {
+    this.sql = sql;
   }
 
   async getPlayer(id: string, fallbackName: string): Promise<PlayerRecord> {
-    const { data, error } = await this.db.from("profiles").select("*").eq("id", id).maybeSingle<ProfileRow>();
-    if (error) throw new Error(error.message);
-
-    let row = data;
-    if (!row) {
-      const { data: created, error: insertError } = await this.db
-        .from("profiles")
-        .upsert({ id, username: fallbackName })
-        .select("*")
-        .single<ProfileRow>();
-      if (insertError) throw new Error(insertError.message);
-      row = created;
-    }
+    // El perfil se crea al registrarse; si faltara, se crea aquí (la cuenta debe existir).
+    let [row] = (await this.sql`select * from profiles where id = ${id}`) as ProfileRow[];
+    row ??= ((await this.sql`
+      insert into profiles (id, username) values (${id}, ${fallbackName})
+      on conflict (id) do update set username = profiles.username
+      returning *`) as ProfileRow[])[0];
 
     return {
       id: row.id,
@@ -100,47 +93,35 @@ export class SupabaseStore implements Store {
   }
 
   async setTeam(id: string, teamId: string) {
-    const { error } = await this.db.from("profiles").update({ favorite_team_id: teamId }).eq("id", id);
-    if (error) throw new Error(error.message);
+    await this.sql`update profiles set favorite_team_id = ${teamId}, updated_at = now() where id = ${id}`;
   }
 
   async saveProgress(id: string, progress: Progress, won: boolean) {
-    const { error } = await this.db.rpc("save_progress", {
-      p_user_id: id,
-      p_division: progress.division,
-      p_season_wins: progress.seasonWins,
-      p_season_losses: progress.seasonLosses,
-      p_titles: progress.titles,
-      p_won: won,
-    });
-    if (error) throw new Error(error.message);
+    await this.sql`
+      update profiles set
+        division = ${progress.division},
+        season_wins = ${progress.seasonWins},
+        season_losses = ${progress.seasonLosses},
+        titles = ${progress.titles},
+        wins = wins + ${won ? 1 : 0},
+        losses = losses + ${won ? 0 : 1},
+        updated_at = now()
+      where id = ${id}`;
   }
 
   async recordMatch(m: MatchRecord) {
-    const { error } = await this.db.from("matches").insert({
-      division: m.division,
-      player_a: m.players[0],
-      player_b: m.players[1],
-      team_a: m.teams[0],
-      team_b: m.teams[1],
-      score_a: m.score[0],
-      score_b: m.score[1],
-      winner: m.winner,
-      reason: m.reason,
-    });
-    if (error) throw new Error(error.message);
+    await this.sql`
+      insert into matches (division, player_a, player_b, team_a, team_b, score_a, score_b, winner, reason)
+      values (${m.division}, ${m.players[0]}, ${m.players[1]}, ${m.teams[0]}, ${m.teams[1]},
+              ${m.score[0]}, ${m.score[1]}, ${m.winner}, ${m.reason})`;
   }
 }
 
 export const memoryStore = new MemoryStore();
 
-export const supabaseAdmin = hasSupabase
-  ? createClient(config.supabaseUrl, config.supabaseSecretKey, { auth: { persistSession: false } })
-  : null;
+const persistent: Store = hasDatabase ? new PostgresStore(neon(config.databaseUrl)) : memoryStore;
 
-const persistent: Store = supabaseAdmin ? new SupabaseStore(supabaseAdmin) : memoryStore;
-
-/** Los invitados siempre van a memoria; las cuentas reales a Supabase si está configurado. */
+/** Los invitados siempre van a memoria; las cuentas, a Postgres si está configurado. */
 export function storeFor(userId: string): Store {
   return userId.startsWith("guest:") ? memoryStore : persistent;
 }
