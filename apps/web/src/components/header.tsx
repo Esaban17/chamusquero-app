@@ -9,7 +9,7 @@ export async function Header() {
     <header className="border-b border-line bg-card">
       <nav className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" className="text-lg font-extrabold tracking-tight">
-          ⚽ Chamusqueros
+          ⚽ penalitosGT
         </Link>
         <div className="flex items-center gap-4 text-sm">
           <Link href="/tabla" className="hover:underline">

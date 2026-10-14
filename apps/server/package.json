@@ -1,5 +1,5 @@
 {
-  "name": "@chamusqueros/server",
+  "name": "@penalitosgt/server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "test": "node --test --test-timeout=30000 src/*.test.ts"
   },
   "dependencies": {
-    "@chamusqueros/shared": "*",
+    "@penalitosgt/shared": "*",
     "@neondatabase/serverless": "^1.2.0",
     "socket.io": "^4.8.1"
   },

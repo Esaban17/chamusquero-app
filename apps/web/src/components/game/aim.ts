@@ -1,4 +1,4 @@
-import { COLUMNS, HEIGHTS, type Pick } from "@chamusqueros/shared";
+import { COLUMNS, HEIGHTS, type Pick } from "@penalitosgt/shared";
 
 /** Geometría de la escena, en % del ancho (x) y del alto (y) de la cancha. */
 export const GOAL = { left: 10, top: 8, width: 80, height: 44 };

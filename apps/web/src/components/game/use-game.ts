@@ -14,7 +14,7 @@ import type {
   ServerToClientEvents,
   Side,
   TurnInfo,
-} from "@chamusqueros/shared";
+} from "@penalitosgt/shared";
 
 type GameSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 

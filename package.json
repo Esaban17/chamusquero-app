@@ -1,9 +1,9 @@
 {
-  "name": "chamusqueros",
+  "name": "penalitosgt",
   "private": true,
   "workspaces": ["packages/*", "apps/*"],
   "scripts": {
-    "dev": "npm run dev --workspace @chamusqueros/server & npm run dev --workspace @chamusqueros/web",
+    "dev": "npm run dev --workspace @penalitosgt/server & npm run dev --workspace @penalitosgt/web",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",

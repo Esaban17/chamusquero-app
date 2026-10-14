@@ -12,7 +12,7 @@ import {
   type MatchSideInfo,
   type Pick,
   type Side,
-} from "@chamusqueros/shared";
+} from "@penalitosgt/shared";
 import { config } from "./config.ts";
 import type { GameServer } from "./types.ts";
 

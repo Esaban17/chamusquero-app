@@ -3,7 +3,7 @@ import { Header } from "@/components/header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Chamusqueros · Penales del fútbol chapín",
+  title: "penalitosGT · Penales del fútbol chapín",
   description:
     "Elige a tu equipo del fútbol guatemalteco y llévalo de Tercera División a campeón de Liga Nacional ganando tandas de penales en línea.",
 };

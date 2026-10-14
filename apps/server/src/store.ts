@@ -1,5 +1,5 @@
 import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
-import { getTeam, newProgress, type DivisionId, type Progress } from "@chamusqueros/shared";
+import { getTeam, newProgress, type DivisionId, type Progress } from "@penalitosgt/shared";
 import { config, hasDatabase } from "./config.ts";
 
 export type PlayerRecord = {

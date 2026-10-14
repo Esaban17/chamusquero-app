@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import { isPick, type HandshakeAuth } from "@chamusqueros/shared";
+import { isPick, type HandshakeAuth } from "@penalitosgt/shared";
 import { authenticate } from "./auth.ts";
 import { config } from "./config.ts";
 import { Lobby } from "./lobby.ts";

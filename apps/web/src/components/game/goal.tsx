@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import { COLUMNS, HEIGHTS, type Kick, type Pick } from "@chamusqueros/shared";
+import { COLUMNS, HEIGHTS, type Kick, type Pick } from "@penalitosgt/shared";
 import { GOAL, KEEPER, SPOT, aimFromSwipe, diveFromDrag, zoneCenter } from "./aim";
 import { playKick } from "./sound";
 

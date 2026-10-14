@@ -1,5 +1,5 @@
 {
-  "name": "@chamusqueros/web",
+  "name": "@penalitosgt/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "node --test \"src/**/*.test.ts\""
   },
   "dependencies": {
-    "@chamusqueros/shared": "*",
+    "@penalitosgt/shared": "*",
     "@neondatabase/serverless": "^1.2.0",
     "next": "^16.0.11",
     "react": "19.2.0",

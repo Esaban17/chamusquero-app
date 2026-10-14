@@ -1,4 +1,4 @@
-import type { Team } from "@chamusqueros/shared";
+import type { Team } from "@penalitosgt/shared";
 
 /** Escudo genérico con los colores del equipo (no usamos escudos oficiales). */
 export function Crest({ team, size = 48 }: { team: Pick<Team, "short" | "colors" | "name">; size?: number }) {
