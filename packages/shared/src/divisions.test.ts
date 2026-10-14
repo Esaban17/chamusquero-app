@@ -57,6 +57,8 @@ test("datos de equipos consistentes", () => {
   for (const d of ["tercera", "segunda", "primera", "liga-nacional"] as const) {
     assert.ok(teamsInDivision(d).length >= 2, d);
   }
-  assert.ok(SELECTABLE_TEAMS.every((t) => t.division !== "tercera"));
+  assert.equal(teamsInDivision("tercera").length, 59);
+  assert.equal(SELECTABLE_TEAMS.length, TEAMS.length);
+  assert.equal(new Set(TEAMS.map((t) => t.short)).size, TEAMS.length, "abreviaturas repetidas");
   assert.ok(TEAMS.every((t) => t.short.length === 3));
 });

@@ -17,8 +17,7 @@ export type Team = {
  * - Primera División: los 20 del Apertura 2026 (grupos A y B).
  * - Segunda División: lista armada a partir de calendarios publicados; está POR VERIFICAR
  *   contra la lista oficial de la federación antes del lanzamiento.
- * - Tercera División: no hay una lista pública confiable, así que por ahora los rivales son
- *   combinados genéricos por departamento. POR REEMPLAZAR con los clubes reales.
+ * - Tercera División: los 59 del Apertura 2026 (10 grupos).
  *
  * Los colores son aproximados y no se usan escudos oficiales (son marcas registradas).
  * Para actualizar equipos al cambiar de torneo, basta con editar este archivo.
@@ -125,30 +124,67 @@ const PALETTE: [string, string][] = [
 const lowerDivision = (rows: [string, string, string][], division: DivisionId) =>
   rows.map(([id, name, short], i) => team(id, name, short, division, PALETTE[i % PALETTE.length]));
 
-// Marcadores de posición hasta tener la lista real de Tercera División.
+// Torneo Apertura 2026, 10 grupos (tabla de la jornada 14 publicada por Antorcha Deportiva).
 const TERCERA: [string, string, string][] = [
-  ["tercera-alta-verapaz", "Combinado Alta Verapaz", "AVE"],
-  ["tercera-baja-verapaz", "Combinado Baja Verapaz", "BVE"],
-  ["tercera-chimaltenango", "Combinado Chimaltenango", "CMT"],
-  ["tercera-chiquimula", "Combinado Chiquimula", "CQM"],
-  ["tercera-el-progreso", "Combinado El Progreso", "PRO"],
-  ["tercera-escuintla", "Combinado Escuintla", "ESQ"],
-  ["tercera-guatemala", "Combinado Guatemala", "GTM"],
-  ["tercera-huehuetenango", "Combinado Huehuetenango", "HUH"],
-  ["tercera-izabal", "Combinado Izabal", "IZB"],
-  ["tercera-jalapa", "Combinado Jalapa", "JLP"],
-  ["tercera-jutiapa", "Combinado Jutiapa", "JTP"],
-  ["tercera-peten", "Combinado Petén", "PTN"],
-  ["tercera-quetzaltenango", "Combinado Quetzaltenango", "QTZ"],
-  ["tercera-quiche", "Combinado Quiché", "QCH"],
-  ["tercera-retalhuleu", "Combinado Retalhuleu", "REU"],
-  ["tercera-sacatepequez", "Combinado Sacatepéquez", "SCT"],
-  ["tercera-san-marcos", "Combinado San Marcos", "SMA"],
-  ["tercera-santa-rosa", "Combinado Santa Rosa", "SRO"],
-  ["tercera-solola", "Combinado Sololá", "SOL"],
-  ["tercera-suchitepequez", "Combinado Suchitepéquez", "SCH"],
-  ["tercera-totonicapan", "Combinado Totonicapán", "TOT"],
-  ["tercera-zacapa", "Combinado Zacapa", "ZAC"],
+  ["atletico-tumbadorense", "Atlético Tumbadorense", "TUM"],
+  ["jacaltenango", "Jacaltenango FC", "JAC"],
+  ["nuevo-horizonte", "CD Nuevo Horizonte", "NHO"],
+  ["sibinal", "Sibinal FC", "SIB"],
+  ["deportivo-mulua", "Deportivo Mulúa FC", "MUL"],
+  ["juventud-tiquisatense", "Juventud Tiquisatense", "TIQ"],
+  ["la-maquina", "CF La Máquina", "MAQ"],
+  ["juventud-tiburoneros", "CF Juventud Tiburoneros", "TIB"],
+  ["tigres-nueva-era", "Tigres AFC Nueva Era", "NER"],
+  ["batallon-canales", "Batallón Canales", "BCA"],
+  ["santa-catarina-pinula", "Santa Catarina Pinula", "SCP"],
+  ["futeca", "Futeca FC", "FUT"],
+  ["global-soccer-academy", "Global Soccer Academy", "GSA"],
+  ["juventus-academy", "Juventus Academy Guatemala", "JAG"],
+  ["cantera-bt", "CF Cantera BT", "CBT"],
+  ["aff-guatemala-b", "AFF Guatemala B", "AFB"],
+  ["barcenas", "FC Bárcenas", "BRC"],
+  ["draco", "Draco FC", "DRA"],
+  ["fundacion-bi", "Fundación BI", "FBI"],
+  ["villa-nueva", "CFS Deportivo Villa Nueva", "VNU"],
+  ["iron-sport", "CSD Iron Sport", "IRO"],
+  ["as-club", "AS Club", "ASC"],
+  ["ciudad-del-sol", "CD Ciudad del Sol", "CDS"],
+  ["acatenango", "Acatenango FC", "ACA"],
+  ["jocotenango", "Deportivo Jocotenango", "JOC"],
+  ["el-tejar", "CF El Tejar", "TEJ"],
+  ["san-lucas-sacatepequez", "ADM San Lucas Sac.", "SLS"],
+  ["yepocapa", "Deportivo Yepocapa", "YEP"],
+  ["chimaltenango-b", "Chimaltenango FC B", "CHB"],
+  ["ud-asuncion", "CF UD Asunción", "ASU"],
+  ["santa-luisa-chinautla", "CF Santa Luisa Chinautla", "CHN"],
+  ["estudiantes-guatemala", "Estudiantes Guatemala FC", "EST"],
+  ["mixco-b", "Mixco B", "MXB"],
+  ["ayampuc", "CF Ayampuc", "AYA"],
+  ["sanjuaneros", "CSD Sanjuaneros", "SJN"],
+  ["champs-ag", "CF Champ's AG", "CAG"],
+  ["usac-tercera", "Club de Fútbol USAC", "USC"],
+  ["imark-sr", "FC Imar'k SR", "IMK"],
+  ["oratoriense", "CF Oratoriense", "ORA"],
+  ["cerinal", "CD Cerinal FC", "CER"],
+  ["jalpatagua", "Jalpatagua FC", "JPG"],
+  ["san-pedro-pinula", "San Pedro Pinula FC", "SPP"],
+  ["remicheros", "Remicheros FC", "REM"],
+  ["rio-hondo", "Río Hondo Emfut", "RHO"],
+  ["santa-cruz-nz", "CF Santa Cruz NZ", "SCZ"],
+  ["san-esteban", "CSD San Esteban", "SES"],
+  ["atlas-esquipulas", "CSD Atlas Esquipulas", "ATL"],
+  ["los-cabros-usumatlan", "CF Los Cabros Usumatlán", "USU"],
+  ["real-amatense", "CFD Real Amatense", "RAM"],
+  ["quirigua", "Deportivo Quiriguá", "QRG"],
+  ["rio-dulce", "CSD Río Dulce", "RDU"],
+  ["el-naranjo", "CSD El Naranjo", "NAR"],
+  ["fray", "Fray FC", "FRY"],
+  ["salama", "CF Salamá", "SLM"],
+  ["torino-salama", "CDF Torino Salamá", "TOR"],
+  ["lanquin", "Lanquín United", "LAN"],
+  ["real-chamelco", "CD Real Chamelco", "RCH"],
+  ["danny-soccer-carcha", "Danny Soccer Carchá AV", "DSC"],
+  ["santa-cruz-av", "Deportivo Santa Cruz AV", "SCV"],
 ];
 
 export const TEAMS: Team[] = [
@@ -158,8 +194,8 @@ export const TEAMS: Team[] = [
   ...lowerDivision(TERCERA, "tercera"),
 ];
 
-/** Equipos que se pueden elegir como favorito (los combinados genéricos no cuentan). */
-export const SELECTABLE_TEAMS: Team[] = TEAMS.filter((t) => t.division !== "tercera");
+/** Equipos que se pueden elegir como favorito. */
+export const SELECTABLE_TEAMS: Team[] = TEAMS;
 
 const BY_ID = new Map(TEAMS.map((t) => [t.id, t]));
 

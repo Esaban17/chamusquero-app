@@ -27,7 +27,7 @@ export default function Home() {
       <section className="grid gap-4 sm:grid-cols-3">
         <div className="card">
           <h2 className="font-bold">1. Elige tu equipo</h2>
-          <p className="text-sm text-muted">Equipos reales de Liga Nacional, Primera y Segunda División.</p>
+          <p className="text-sm text-muted">Equipos reales de las cuatro divisiones del fútbol guatemalteco.</p>
         </div>
         <div className="card">
           <h2 className="font-bold">2. Gana la tanda</h2>

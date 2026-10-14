@@ -37,4 +37,4 @@ npm run build
 
 ## Equipos
 
-Los equipos están en `packages/shared/src/teams.ts`. Liga Nacional y Primera División son los del Apertura 2026. La lista de Segunda está por verificar y la de Tercera usa combinados genéricos por departamento hasta conseguir la lista oficial. No se usan escudos oficiales: cada equipo tiene un escudo genérico con sus colores.
+Los equipos están en `packages/shared/src/teams.ts`. Liga Nacional y Primera División son los del Apertura 2026. Tercera División son los 59 equipos del Apertura 2026 en 10 grupos. La lista de Segunda está por verificar. No se usan escudos oficiales: cada equipo tiene un escudo genérico con sus colores.
